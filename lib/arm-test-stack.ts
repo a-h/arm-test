@@ -3,30 +3,31 @@ import { Construct } from 'constructs';
 import { DockerImageAsset, Platform } from 'aws-cdk-lib/aws-ecr-assets';
 import * as path from 'path';
 import { ApplicationLoadBalancedFargateService } from 'aws-cdk-lib/aws-ecs-patterns';
-import { ContainerImage } from 'aws-cdk-lib/aws-ecs';
-
-// import * as sqs from 'aws-cdk-lib/aws-sqs';
+import { ContainerImage, FargateTaskDefinition, CpuArchitecture, OperatingSystemFamily } from 'aws-cdk-lib/aws-ecs';
 
 export class ArmTestStack extends Stack {
         constructor(scope: Construct, id: string, props?: StackProps) {
                 super(scope, id, props);
 
-                // The code that defines your stack goes here
-
-                // example resource
-                // const queue = new sqs.Queue(this, 'ArmTestQueue', {
-                //   visibilityTimeout: cdk.Duration.seconds(300)
-                // });
                 const image = new DockerImageAsset(this, "ArmNodeExample", {
                         directory: path.join(__dirname, "../node-docker-example"),
-                        platform: Platform.LINUX_AMD64,
+                        platform: Platform.LINUX_ARM64,
                 })
+                const taskDefinition = new FargateTaskDefinition(this, 'TaskDef', {
+                        runtimePlatform: {
+                                operatingSystemFamily: OperatingSystemFamily.LINUX,
+                                cpuArchitecture: CpuArchitecture.ARM64,
+                        },
+                        cpu: 1024,
+                        memoryLimitMiB: 2048,
+                });
+                taskDefinition.addContainer('windowsservercore', {
+                        portMappings: [{ containerPort: 3000 }],
+                        image: ContainerImage.fromDockerImageAsset(image),
+                });
                 const service = new ApplicationLoadBalancedFargateService(this, "LoadBalancedService", {
                         assignPublicIp: true,
-                        taskImageOptions: {
-                                image: ContainerImage.fromDockerImageAsset(image),
-                                containerPort: 3000,
-                        },
+                        taskDefinition,
                 })
                 new CfnOutput(this, "endpointURL", { value: service.loadBalancer.loadBalancerDnsName, })
         }
