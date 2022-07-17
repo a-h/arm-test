@@ -45,7 +45,6 @@ jobs:
         run: npm install -g aws-cdk@2.29.1
 
       - name: Assume deployer role for Testing
-        if: steps.extract_branch.outputs.branch == 'main'
         uses: aws-actions/configure-aws-credentials@v1
         with:
           role-to-assume: arn:aws:iam::180466524585:role/github-role-Role-19FJ3ABJJ6OIN
