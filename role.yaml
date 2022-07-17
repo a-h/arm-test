@@ -13,7 +13,7 @@ Resources:
                 - !Ref GithubOidc
             Condition:
               StringLike:
-                token.actions.githubusercontent.com:sub: !Sub repo:a-h/arm-test:main
+                token.actions.githubusercontent.com:sub: repo:a-h/arm-test:*
 
   GithubOidc:
     Type: AWS::IAM::OIDCProvider
