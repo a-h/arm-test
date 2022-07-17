@@ -19,6 +19,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
+      - name: Assume deployer role for Testing
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: arn:aws:iam::180466524585:role/github-role-Role-19FJ3ABJJ6OIN
+          aws-region: eu-west-2
+
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
 
@@ -43,12 +49,6 @@ jobs:
 
       - name: CDK install
         run: npm install -g aws-cdk@2.29.1
-
-      - name: Assume deployer role for Testing
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          role-to-assume: arn:aws:iam::180466524585:role/github-role-Role-19FJ3ABJJ6OIN
-          aws-region: eu-west-2
 
       - name: NPM install
         run: npm ci
