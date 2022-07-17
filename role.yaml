@@ -3,7 +3,7 @@ Resources:
     Type: AWS::IAM::Role
     Properties:
       ManagedPolicyArns:
-        - arn:aws:iam::aws:policy/AWSCloudFormationFullAccess
+        - arn:aws:iam::aws:policy/PowerUserAccess
       AssumeRolePolicyDocument:
         Statement:
           - Effect: Allow
