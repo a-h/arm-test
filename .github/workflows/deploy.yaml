@@ -20,7 +20,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Assume deployer role for Testing
-        uses: aws-actions/configure-aws-credentials@master
+        uses: aws-actions/configure-aws-credentials@v1
         with:
           role-to-assume: arn:aws:iam::180466524585:role/github-role-Role-19FJ3ABJJ6OIN
           aws-region: eu-west-2
