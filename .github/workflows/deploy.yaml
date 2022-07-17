@@ -48,11 +48,11 @@ jobs:
         if: steps.extract_branch.outputs.branch == 'main'
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          role-to-assume: arn:aws:iam::180466524585:role/github-role
+          role-to-assume: arn:aws:iam::180466524585:role/github-role-Role-19FJ3ABJJ6OIN
           aws-region: eu-west-2
 
-      - name: CDK install
-        run: npm install -g aws-cdk@2.29.1
+      - name: NPM install
+        run: npm ci
 
       - name: CDK deploy
         run: cdk deploy --require-approval never
