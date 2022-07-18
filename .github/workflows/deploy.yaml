@@ -36,5 +36,11 @@ jobs:
       - name: NPM install
         run: npm ci
 
+      - name: View directory __w
+        run: ls -lah /__w/arm-test/
+
+      - name: View directory pwd
+        run: ls -lah
+
       - name: CDK deploy
         run: cdk deploy --require-approval never
