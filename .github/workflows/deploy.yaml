@@ -11,6 +11,7 @@ permissions:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    container: ghcr.io/a-h/aws-go-cdk-action:main
     permissions:
       id-token: write
       contents: read
