@@ -48,9 +48,6 @@ jobs:
       - name: NPM install
         run: npm ci
 
-      - name: Whoami
-        run: whoami
-
       - name: View directory __w
         run: ls -lah /__w/arm-test/
 
