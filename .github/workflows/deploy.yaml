@@ -17,6 +17,9 @@ jobs:
       contents: read
 
     steps:
+      - name: Change owner
+        run: chown -R $USER:$USER /__w/arm-test
+
       - name: Checkout repository
         uses: actions/checkout@v3
 
