@@ -20,8 +20,15 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      # https://stackoverflow.com/questions/67748017/how-to-use-github-actions-checkoutv2-inside-own-docker-container
       - name: Change runner
-        run: usermod -a -G root runner
+        run: groupadd -g 121 docker
+
+      - name: Add runner
+        run: useradd -g docker runner
+
+      - name: Change runner
+        run: usermod -a -G sudo runner
 
       - name: Assume deployer role for Testing
         uses: aws-actions/configure-aws-credentials@v1
