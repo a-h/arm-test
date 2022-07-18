@@ -18,7 +18,7 @@ jobs:
 
     steps:
       - name: Create directory
-        run: mkdir /__w
+        run: chown -R $USER:$USER /__w
 
       - name: Checkout repository
         uses: actions/checkout@v2
