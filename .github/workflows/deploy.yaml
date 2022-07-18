@@ -9,29 +9,28 @@ permissions:
   contents: read
 
 jobs:
-  deploy:
+  # See https://github.com/actions/runner/issues/691
+  configure:
     runs-on: ubuntu-latest
-    container: ghcr.io/a-h/aws-go-cdk-action:main
+    outputs:
+      uid_gid: ${{ steps.get-user.outputs.uid_gid }}
+    steps:
+      - id: get-user
+        run: echo "::set-output name=uid_gid::$(id -u):$(id -g)"
+
+  deploy:
+    needs: configure
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/a-h/aws-go-cdk-action:main
+      options: --user ${{ needs.configure.outputs.uid_gid }}
     permissions:
       id-token: write
       contents: read
 
     steps:
-      - name: Change owner
-        run: chown -R $USER:$USER /__w/arm-test
-
       - name: Checkout repository
         uses: actions/checkout@v3
-
-       #https://stackoverflow.com/questions/67748017/how-to-use-github-actions-checkoutv2-inside-own-docker-container
-      - name: Change runner
-        run: groupmod -g 121 docker
-
-      - name: Add runner
-        run: useradd -g docker runner
-
-      - name: Change runner
-        run: usermod -a -G sudo runner
 
       - name: Assume deployer role for Testing
         uses: aws-actions/configure-aws-credentials@v1
