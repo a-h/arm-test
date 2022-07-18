@@ -49,7 +49,7 @@ jobs:
         run: ls -lah
 
       - name: Create manually
-        run: mkdir '/__w/arm-test/arm-test/cdk.out/asset.test'
+        run: mkdir -p 'cdk.out/asset.test'
 
       - name: CDK deploy
         run: cdk deploy --require-approval never
