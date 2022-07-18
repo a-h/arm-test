@@ -9,7 +9,7 @@ permissions:
   contents: read
 
 jobs:
-  # See https://github.com/actions/runner/issues/691
+  # See https://github.com/actions/runner/issues/691 for why this is required.
   configure:
     runs-on: ubuntu-latest
     outputs:
@@ -47,24 +47,6 @@ jobs:
 
       - name: NPM install
         run: npm ci
-
-      - name: View directory __w
-        run: ls -lah /__w/arm-test/
-
-      - name: View directory __w
-        run: ls -lah /__w/arm-test/arm-test
-
-      - name: View directory pwd
-        run: ls -lah
-
-      - name: Create manually
-        run: mkdir -p 'cdk.out/asset.test'
-
-      - name: View directory pwd
-        run: ls -lah
-
-      - name: View directory pwd
-        run: pwd
 
       - name: CDK deploy
         run: cdk deploy --require-approval never
