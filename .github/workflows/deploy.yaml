@@ -20,9 +20,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # https://stackoverflow.com/questions/67748017/how-to-use-github-actions-checkoutv2-inside-own-docker-container
-      #- name: Change runner
-        #run: groupadd -g 121 docker
+       https://stackoverflow.com/questions/67748017/how-to-use-github-actions-checkoutv2-inside-own-docker-container
+      - name: Change runner
+        run: groupmod -g 121 docker
 
       - name: Add runner
         run: useradd -g docker runner
