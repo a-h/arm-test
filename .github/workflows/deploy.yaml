@@ -17,8 +17,8 @@ jobs:
       contents: read
 
     steps:
-      - name: Create directory
-        run: chown -R $USER:$USER /__w
+      - name: Change Owner of Container Working Directory
+        run: chown 1001:121 .
 
       - name: Checkout repository
         uses: actions/checkout@v2
