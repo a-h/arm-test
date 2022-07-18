@@ -20,8 +20,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Change Owner of Container Working Directory
-        run: chown -R 1001:121 .
+      - name: Change runner
+        run: usermod -a -G root runner
 
       - name: Assume deployer role for Testing
         uses: aws-actions/configure-aws-credentials@v1
@@ -53,6 +53,12 @@ jobs:
 
       - name: Create manually
         run: mkdir -p 'cdk.out/asset.test'
+
+      - name: View directory pwd
+        run: ls -lah
+
+      - name: View directory pwd
+        run: pwd
 
       - name: CDK deploy
         run: cdk deploy --require-approval never
