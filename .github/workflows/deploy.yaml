@@ -17,8 +17,8 @@ jobs:
       contents: read
 
     steps:
-      - name: Take ownership of repo
-        run: chown -R $USER:$USER /home/github/actions-runner/_work/arm-test
+      - name: Create directory
+        run: mkdir /__w
 
       - name: Checkout repository
         uses: actions/checkout@v2
