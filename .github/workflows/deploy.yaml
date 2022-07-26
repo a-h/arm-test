@@ -9,21 +9,9 @@ permissions:
   contents: read
 
 jobs:
-  # See https://github.com/actions/runner/issues/691 for why this is required.
-  configure:
-    runs-on: ubuntu-latest
-    outputs:
-      uid_gid: ${{ steps.get-user.outputs.uid_gid }}
-    steps:
-      - id: get-user
-        run: echo "::set-output name=uid_gid::$(id -u):$(id -g)"
-
   deploy:
     needs: configure
     runs-on: ubuntu-latest
-    container:
-      image: ghcr.io/a-h/aws-go-cdk-action:main
-      options: --user ${{ needs.configure.outputs.uid_gid }}
     permissions:
       id-token: write
       contents: read
@@ -49,4 +37,4 @@ jobs:
         run: npm ci
 
       - name: CDK deploy
-        run: cdk deploy --require-approval never
+        run: npx cdk deploy --require-approval never
