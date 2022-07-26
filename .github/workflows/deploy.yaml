@@ -35,5 +35,8 @@ jobs:
       - name: NPM install
         run: npm ci
 
+      - name: Pull base image
+        run: docker pull --platform=arm64 node:16-alpine
+
       - name: CDK deploy
         run: npx cdk deploy --require-approval never
