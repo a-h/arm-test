@@ -10,7 +10,7 @@ export class ArmTestStack extends Stack {
         super(scope, id, props);
 
         const image = new DockerImageAsset(this, "ArmNodeExample", {
-            directory: path.join(__dirname, "../nextjs-docker-example"),
+            directory: path.join(__dirname, "../node-docker-example"),
             platform: Platform.LINUX_ARM64,
         })
         const taskDefinition = new FargateTaskDefinition(this, "TaskDef", {
