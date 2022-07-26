@@ -10,7 +10,6 @@ permissions:
 
 jobs:
   deploy:
-    needs: configure
     runs-on: ubuntu-latest
     permissions:
       id-token: write
